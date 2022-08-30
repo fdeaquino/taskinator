@@ -8,4 +8,5 @@ var createTaskHandler = function() {
   tasksToDoEl.appendChild(listItemEl);
 };
 
+// with a button click, create a task
 buttonEl.addEventListener("click", createTaskHandler);
