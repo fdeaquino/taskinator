@@ -6,7 +6,7 @@ var taskFormHandler = function(event) {
   var taskNameInput = document.querySelector("input[name='task-name'").value;
   var taskTypeInput = document.querySelector("select[name='task-type']").value;
 
-  // check if inputs are empty (validate)
+  // CHECK IF INPUT ARE EMPTY (VALIDATE)
   if (taskNameInput === "" || taskTypeInput === "") {
     alert("You need to fill out the task form!");
     return false;
@@ -14,7 +14,7 @@ var taskFormHandler = function(event) {
   
   formEl.reset();
 
-  // reset form fields for next task to be entered
+  // RESET FORM FIELDS FOR NEXT TASK TO BE ENTERED
   document.querySelector("input[name='task-name']").value = "";
   document.querySelector("select[name='task-type']").selectedIndex = 0;
 
@@ -27,11 +27,11 @@ var taskFormHandler = function(event) {
 };
 
 var createTaskEl = function(taskDataObj) {
-  // create list item
+  // CREATE LIST ITEM
   var listItemEl = document.createElement("li");
   listItemEl.className = "task-item";
 
-  // create div to hold task info and add to list item
+  // CREATE DIV TO HOLD TASK INFO AND ADD TO LIST ITEM
   var taskInfoEl = document.createElement("div");
   taskInfoEl.className = "task-info";
   taskInfoEl.innerHTML = "<h3 class='task-name'>" + taskDataObj.name + "</h3><span class='task-type'>" + taskDataObj.type + "</span>";
