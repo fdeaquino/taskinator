@@ -39,7 +39,7 @@ var createTaskEl = function(taskDataObj) {
 
   console.dir(listItemEl);
 
-  // add list item to list
+  // ADD LIST ITEM TO LIST
   tasksToDoEl.appendChild(listItemEl);
 };
 
