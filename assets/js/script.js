@@ -112,7 +112,7 @@ var completeEditTask = function(taskName, taskType, taskId) {
 };
 
 var taskButtonHandler = function(event) {
-  // get target element from event
+  // GET TARGET ELEMENT FROM EVENT
   var targetEl = event.target;
 
   if (targetEl.matches(".edit-btn")) {
@@ -129,12 +129,12 @@ var taskButtonHandler = function(event) {
 var taskStatusChangeHandler = function(event) {
   console.log(event.target.value);
 
-  // find task list item based on event.target's data-task-id attribute
+  // FIND TASK LIST ITEM BASED ON EVENT.TARGET'S DATA-TASK-ID ATTRIBUTE
   var taskId = event.target.getAttribute("data-task-id");
 
   var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
 
-  // convert value to lower case
+  // CONVERT VALUE TO LOWERCASE
   var statusValue = event.target.value.toLowerCase();
 
   if (statusValue === "to do") {
@@ -149,34 +149,34 @@ var taskStatusChangeHandler = function(event) {
 var editTask = function(taskId) {
   console.log(taskId);
 
-  // get task list item element
+  // GET TASK LIST ITEM ELEMENT
   var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
 
-  // get content from task name and type
+  // GET CONTENT FROM TASK NAME AND TYPE
   var taskName = taskSelected.querySelector("h3.task-name").textContent;
   console.log(taskName);
 
   var taskType = taskSelected.querySelector("span.task-type").textContent;
   console.log(taskType);
 
-  // write values of taskname and taskType to form to be edited
+  // WRITE VALUES OF TASK NAME AND TASKTYPE TO FORM TO BE EDITED
   document.querySelector("input[name='task-name']").value = taskName;
   document.querySelector("select[name='task-type']").value = taskType;
 
-  // set data attribute to the form with a value of the task's id so it knows which one is being edited
+  // SET DATA ATTRIBUTE TO THE FORM WITH A VALUE OF THE TASK'S ID SO IT KNOWS WHICH ONE IS BEING EDITED
   formEl.setAttribute("data-task-id", taskId);
-  // update form's button to reflect editing a task rather than creating a new one
+  // UPDATE FORM'S BUTTON TO REFLECT EDITING A TASK RATHER THAN CREATING A NEW ONE
   formEl.querySelector("#save-task").textContent = "Save Task";
 };
 
 var deleteTask = function(taskId) {
   console.log(taskId);
-  // find task list element with taskId value and remove it
+  // FIND TASK LIST ELEMENT WITH TASKID VALUE AND REMOVE IT
   var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
   taskSelected.remove();
 };
 
-// Create a new task
+// CREATE A NEW TASK
 formEl.addEventListener("submit", taskFormHandler);
 
 // for edit and delete buttons
