@@ -11,17 +11,17 @@ var taskFormHandler = function(event) {
   var taskNameInput = document.querySelector("input[name='task-name']").value;
   var taskTypeInput = document.querySelector("select[name='task-type']").value;
 
-  // check if inputs are empty (validate)
+  // CHECK IF INPUTS ARE EMPTY (VALIDATE)
   if (taskNameInput === "" || taskTypeInput === "") {
     alert("You need to fill out the task form!");
     return false;
   }
 
-  // reset form fields for next task to be entered
+  // RESET FORM FIELDS FOR NEXT TASK TO BE ENTERED
   document.querySelector("input[name='task-name']").value = "";
   document.querySelector("select[name='task-type']").selectedIndex = 0;
 
-  // check if task is new or one being edited by seeing if it has a data-task-id attribute
+  // CHECK IF TASK IS NEW OR ONE BEING EDITED BY SEEING IF IT HAS A data-task-id ATTRIBUTE
   var isEdit = formEl.hasAttribute("data-task-id");
 
   if (isEdit) {
@@ -96,18 +96,18 @@ var createTaskActions = function(taskId) {
 };
 
 var completeEditTask = function(taskName, taskType, taskId) {
-  // find task list item with taskId value
+  // FIND TASK LIST ITEM WITH taskId VALUE 
   var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
 
-  // set new values
+  // SET NEW VALUES
   taskSelected.querySelector("h3.task-name").textContent = taskName;
   taskSelected.querySelector("span.task-type").textContent = taskType;
 
   alert("Task Updated!");
 
-  // remove data attribute from form
+  // REMOVE DATA ATTRIBUTE FROM FORM
   formEl.removeAttribute("data-task-id");
-  // update formEl button to go back to saying "Add Task" instead of "Edit Task"
+  // UPDATE formEl BUTTON TO GO BACK TO SAYING "ADD TASK" INSTEAD OF "EDIT TASK"
   formEl.querySelector("#save-task").textContent = "Add Task";
 };
 
@@ -179,8 +179,8 @@ var deleteTask = function(taskId) {
 // CREATE A NEW TASK
 formEl.addEventListener("submit", taskFormHandler);
 
-// for edit and delete buttons
+// FOR EDIT AND DELETE BUTTONS
 pageContentEl.addEventListener("click", taskButtonHandler);
 
-// for changing the status
+// FOR CHANGING THE STATUS
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
