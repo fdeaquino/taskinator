@@ -5,6 +5,7 @@ var tasksToDoEl = document.querySelector("#tasks-to-do");
 var tasksInProgressEl = document.querySelector("#tasks-in-progress");
 var tasksCompletedEl = document.querySelector("#tasks-completed");
 var pageContentEl = document.querySelector("#page-content");
+var tasks = [];
 
 var taskFormHandler = function(event) {
   event.preventDefault();
@@ -30,7 +31,8 @@ var taskFormHandler = function(event) {
   } else {
     var taskDataObj = {
       name: taskNameInput,
-      type: taskTypeInput
+      type: taskTypeInput,
+      status: "to do"
     };
 
     createTaskEl(taskDataObj);
@@ -51,6 +53,10 @@ var createTaskEl = function(taskDataObj) {
   var taskActionsEl = createTaskActions(taskIdCounter);
   listItemEl.appendChild(taskActionsEl);
   tasksToDoEl.appendChild(listItemEl);
+
+  taskDataObj.id = taskIdCounter;
+
+  tasks.push(taskDataObj);
 
   // INCREASE TASK COUNTER FOR NEXT UNIQUE ID
   taskIdCounter++;
@@ -103,6 +109,13 @@ var completeEditTask = function(taskName, taskType, taskId) {
   taskSelected.querySelector("h3.task-name").textContent = taskName;
   taskSelected.querySelector("span.task-type").textContent = taskType;
 
+  for (var i = 0; i < tasks.length; i++) {
+    if (tasks[i].id === parseInt(taskId)) {
+      tasks[i].name = taskName;
+      tasks[i].type = taskType;
+    }
+  }
+
   alert("Task Updated!");
 
   // REMOVE DATA ATTRIBUTE FROM FORM
@@ -144,6 +157,15 @@ var taskStatusChangeHandler = function(event) {
   } else if (statusValue === "completed") {
     tasksCompletedEl.appendChild(taskSelected);
   }
+
+  // UPDATE TASKS IN TASKS ARRAY
+  for (var i = 0; i < tasks.length; i++) {
+    if (tasks[i].id === parseInt(taskId)) {
+      tasks[i].status = statusValue;
+    }
+  }
+
+  console.log(tasks);
 };
 
 var editTask = function(taskId) {
@@ -174,6 +196,20 @@ var deleteTask = function(taskId) {
   // FIND TASK LIST ELEMENT WITH TASKID VALUE AND REMOVE IT
   var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
   taskSelected.remove();
+
+  // CREATE A NEW ARRAY TO HOLD UPDATED LIST OF TASKS
+  var updatedTaskArr = [];
+
+  // LOOP THROUGH CURRENT TASKS
+  for (var i = 0; i < tasks.length; i++) {
+    // IF tasks[i].id DOESN'T MATCH THE VALUE OF OUR taskId, LET'S KEEP THAT TASK AND PUSH IT INTO THE NEW ARRAY
+    if (tasks[i].id !== parseInt(taskId)) {
+      updatedTaskArr.push(tasks[i]);
+    }
+  }
+  
+  // REASSIGN TASKS ARRAY TO BE THE SAME AS updatedTaskArr
+  tasks = updatedTaskArr;
 };
 
 // CREATE A NEW TASK
