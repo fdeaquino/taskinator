@@ -58,6 +58,9 @@ var createTaskEl = function(taskDataObj) {
 
   tasks.push(taskDataObj);
 
+  // SAVE TASKS TO localStorage
+  saveTasks();
+
   // INCREASE TASK COUNTER FOR NEXT UNIQUE ID
   taskIdCounter++;
 };
@@ -122,6 +125,9 @@ var completeEditTask = function(taskName, taskType, taskId) {
   formEl.removeAttribute("data-task-id");
   // UPDATE formEl BUTTON TO GO BACK TO SAYING "ADD TASK" INSTEAD OF "EDIT TASK"
   formEl.querySelector("#save-task").textContent = "Add Task";
+  
+  // SAVEE TASKS TO localStorage
+  saveTasks();
 };
 
 var taskButtonHandler = function(event) {
@@ -165,7 +171,8 @@ var taskStatusChangeHandler = function(event) {
     }
   }
 
-  console.log(tasks);
+  // SAVE TO localStorage
+  saveTasks();
 };
 
 var editTask = function(taskId) {
@@ -210,7 +217,35 @@ var deleteTask = function(taskId) {
   
   // REASSIGN TASKS ARRAY TO BE THE SAME AS updatedTaskArr
   tasks = updatedTaskArr;
+
+  // SAVE TO localStorage
+  saveTasks();
 };
+
+var saveTasks = function() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+// 
+var loadTasks = function () {
+  var savedTasks = localStorage.getItem("tasks");
+  // IF THERE ARE NO TASKS, SET TASKS TO AN EMPTY ARRAY AND RETURN OUT OF THE FUNCTION
+  if (!savedTasks) {
+    return false;
+  }
+  console.log("Saved tasks found!");
+  // ELSE, LOAD UP SAVED TASKS
+  
+  // PARSE INTO ARRAY OF OBJECTS
+  savedTasks = JSON.parse(savedTasks);
+
+  // LOOP THROUGH savedTasks ARRAY
+  for (i = 0; i < savedTasks.length; i++) {
+    // PASS EACH TASK OBJECT INTO THE 'createTaskEl()' function
+    createTaskEl(savedTasks[i]);
+  }
+}
+
 
 // CREATE A NEW TASK
 formEl.addEventListener("submit", taskFormHandler);
@@ -220,3 +255,5 @@ pageContentEl.addEventListener("click", taskButtonHandler);
 
 // FOR CHANGING THE STATUS
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
+
+loadTasks();
